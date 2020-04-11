@@ -1,3 +1,5 @@
+.gitignore
+.gitattributes
 .DS_Store
 README.md
 template.asv
