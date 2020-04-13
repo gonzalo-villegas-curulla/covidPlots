@@ -2,6 +2,9 @@
 clear all
 close all
 delete time_series_covid19_confirmed_global.csv
+if (exist([pwd '\images\figure1.png'])) ~= 0
+    delete([pwd '\images\figure1.png']);
+end
 
 % url = ['https://github.com/CSSEGISandData/COVID-19/blob/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'];
 
@@ -111,4 +114,5 @@ subplot(224), yyaxis left, plot(UKor), hold on, plot(UK),
 %   Save plots
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-%
+
+saveas(fig1, [pwd '\images\figure1.png']);
