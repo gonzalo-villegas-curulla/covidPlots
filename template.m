@@ -29,7 +29,7 @@ data = readtable('time_series_covid19_confirmed_global.csv');
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 % Convert data
-LL = size(data); LL = LL(2);
+LL = size(data); LL = LL(2);  % Shorthand for vector length
 
 temp = data(1,5:LL);
 for n = 1:LL-4, t(n) = temp.(n); end
@@ -80,11 +80,14 @@ fig1 = figure('Name','Confirmed new cases','Units','Normalized', 'OuterPosition'
 
 % Spain
 subplot(221), yyaxis left, plot(ESPor), hold on, plot(ESP),
-    ylim([-0.66*max(ESPor) 1.05*max(ESPor)]);
+    ESPbelowlim = -0.66*max(ESPor);
+    ESPabovelim = 1.05*max(ESPor);
+    ylim([ESPbelowlim ESPabovelim ]);
     yyaxis right, plot(gradient(ESP)), hold on, plot(del2(ESP)),
     grid on, ylim([1.05*min(min(gradient(ESP)),min(del2(ESP))), 2.5*max(max(gradient(ESP)),max(del2(ESP)))]);
     lgnd1 = legend('New cases','5-day-av','grad','del2','location','northwest');
     title(lgnd1,'Spain');
+    
 
 % Italy
 subplot(222), yyaxis left, plot(ITor), hold on, plot(IT),

@@ -2,9 +2,12 @@
 
 I use the script `template.m` to plot daily data from John Hopkins University GitHub and visualize the stats of cases in France, Spain, Italy and the United Kingdom.
 
-## Last update:
-<img src="https://github.com/gonzalo-villegas-curulla/covidPlots/images/figure1.png">
-[link](https://github.com/CSSEGISandData/COVID-19) to source.
+At the moment, I am comparing the trend of the variable confirmed new cases. 
+
+## See last update below:
+<img src="https://github.com/gonzalo-villegas-curulla/covidPlots/blob/master/images/figure1.png">
+
+[Link](https://github.com/CSSEGISandData/COVID-19) to source.
 
 
 <!-- <img src="https://github.com/gonzalo-villegas-curulla/covidPlots/"> -->
