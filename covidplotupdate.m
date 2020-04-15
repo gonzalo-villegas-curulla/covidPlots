@@ -111,7 +111,7 @@ UKh = subplot(224); yyaxis left, plot(UKor), hold on, plot(UK);
     ylim([-0.66*max(UKor) 1.05*max(UKor)]);
     yyaxis right, plot(gradient(UK)), hold on, plot(del2(UK));
     grid on, ylim([1.05*min(min(gradient(UK)),min(del2(UK))), 2.5*max(max(gradient(UK)),max(del2(UK)))]);
-    lgnd4 = legend('Nex cases','5-day-av','grad','del2','location','northwest');
+    lgnd4 = legend('New cases','5-day-av','grad','del2','location','northwest');
     title(lgnd4, 'United Kingdom');
 
 % Add offset lines
