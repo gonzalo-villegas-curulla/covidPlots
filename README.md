@@ -1,6 +1,6 @@
 # Plots of covid-19 stats
 
-I use the script `covidplotupdate.m` to plot daily data from John Hopkins University GitHub and visualize the stats of cases in France, Spain, Italy and the United Kingdom.
+I use the script `covidplotupdate.m` to plot daily data from John Hopkins University [GitHub](https://github.com/CSSEGISandData/COVID-19) and visualize the stats of cases in France, Spain, Italy and the United Kingdom.
 
 At the moment, I am comparing the trend of the variable confirmed new cases.
 
