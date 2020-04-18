@@ -80,7 +80,7 @@ UK(5:end) = (UK(5:end) +UK(4:end-1) +UK(3:end-2) +UK(2:end-3) +UK(1:end-4) )/5; 
 fig1 = figure('Name','Confirmed new cases','Units','Normalized', 'OuterPosition',[0 0 1 1]);
 
 % Spain
-ESPh = subplot(221); yyaxis left, plot(ESPor), hold on, plot(ESP);
+ESPh = subplot(221); yyaxis left, plot(ESPor), hold on, plot(ESP); xlabel('Days');
     ESPbelowlim = -0.66*max(ESPor);
     ESPabovelim = 1.05*max(ESPor);
     ylim([ESPbelowlim ESPabovelim ]);
@@ -91,7 +91,7 @@ ESPh = subplot(221); yyaxis left, plot(ESPor), hold on, plot(ESP);
 
 
 % Italy
-ITh = subplot(222); yyaxis left, plot(ITor), hold on, plot(IT);
+ITh = subplot(222); yyaxis left, plot(ITor), hold on, plot(IT); xlabel('Days');
     ylim([-0.66*max(ITor) 1.05*max(ITor)]);
     yyaxis right, plot(gradient(IT)), hold on, plot(del2(IT));
     grid on, ylim([1.05*min(min(gradient(IT)),min(del2(IT))), 2.5*max(max(gradient(IT)),max(del2(IT)))]);
@@ -99,7 +99,7 @@ ITh = subplot(222); yyaxis left, plot(ITor), hold on, plot(IT);
     title(lgnd2,'Italy');
 
 % France
-FRh = subplot(223); yyaxis left, plot(FRor), hold on, plot(FR);
+FRh = subplot(223); yyaxis left, plot(FRor), hold on, plot(FR); xlabel('Days');
     ylim([-0.66*max(FRor) 1.05*max(FRor)]);
     yyaxis right, plot(gradient(FR)), hold on, plot(del2(FR));
     grid on, ylim([1.05*min(min(gradient(FR)),min(del2(FR))), 2.5*max(max(gradient(FR)),max(del2(FR)))]);
@@ -107,7 +107,7 @@ FRh = subplot(223); yyaxis left, plot(FRor), hold on, plot(FR);
     title(lgnd3,'France');
 
 % United Kingdom
-UKh = subplot(224); yyaxis left, plot(UKor), hold on, plot(UK);
+UKh = subplot(224); yyaxis left, plot(UKor), hold on, plot(UK); xlabel('Days');
     ylim([-0.66*max(UKor) 1.05*max(UKor)]);
     yyaxis right, plot(gradient(UK)), hold on, plot(del2(UK));
     grid on, ylim([1.05*min(min(gradient(UK)),min(del2(UK))), 2.5*max(max(gradient(UK)),max(del2(UK)))]);
