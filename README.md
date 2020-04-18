@@ -2,12 +2,18 @@
 
 I use the script `covidplotupdate.m` to plot daily data from John Hopkins University [GitHub](https://github.com/CSSEGISandData/COVID-19) and visualize the stats of cases in France, Spain, Italy and the United Kingdom.
 
-At the moment, I am comparing the trend of the variable confirmed new cases.
+At the moment, I am comparing the trend of the variables confirmed new cases and deaths.
 
 ## See last update below:
-Vertical line marks the first confirmed case.
+Vertical line marks the first occurrences.
 
-<img src="https://github.com/gonzalo-villegas-curulla/covidPlots/blob/master/images/figure1.png">
+#### New cases:
+
+<img src="https://github.com/gonzalo-villegas-curulla/covidPlots/blob/master/images/figure_confirmed.png">
+
+#### Deaths:
+
+<img src="https://github.com/gonzalo-villegas-curulla/covidPlots/blob/master/images/figure_deaths.png">
 
 [Link](https://github.com/CSSEGISandData/COVID-19) to source.
 
