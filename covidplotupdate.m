@@ -1,3 +1,14 @@
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%
+% 0. Introduction
+%
+% covidplotupdate.m
+% Script plotting evolution diagrams of covid-19 epidemiology
+%
+% Gonzalo Villegas Curulla
+%
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 clear all
 close all
@@ -22,26 +33,35 @@ filename = {'time_series_covid19_confirmed_global.csv',...
 legend_tag = {'New cases','Deaths'};
 % figure_name = {'Confirmed new cases',...
 %                'Deaths'};
+options = weboptions('TimeOut',Inf);
+
+% Chart for graphs
+grid_plots = [0,   0.5,  0.5, 0.4;
+              0.5, 0.5,  0.5, 0.4;
+              0,   0,    0.5, 0.4;
+              0.5, 0,    0.5, 0.4];
+
+grid_rul = [0, (grid_plots(1,2)+grid_plots(1,4)), 0.5, (1-grid_plots(1,2)+grid_plots(1,4));
+            ;
+            ;
+            ];
 
 for idx = 1:2
 
 
 
     % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    %   Acquire data
+    %   1. Acquire data
     % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 
-
-    options = weboptions('TimeOut',Inf);
-    % outputfilename = websave(filename, url, options);
     websave(char(filename(idx)), char(url(idx)), options);
 
     data = readtable(char(filename(idx)));
 
     % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    %   Prepare series
+    %   2. Prepare series
     % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     % Convert data
@@ -61,33 +81,40 @@ for idx = 1:2
     for n = 1:LL-4, uk(n) = temp.(n); end
 
 
-    spain = cellfun(@str2num,spain); spain = spain';
+    spain = cellfun(@str2num,spain); spain = spain'; % {Otherwise spain(n) = str2num(char(temp.(n))) above}
     france  = cellfun(@str2num,france); france = france';
     italy = cellfun(@str2num,italy); italy = italy';
     uk = cellfun(@str2num,uk); uk = uk';
 
 
     % Create time series
+    range  = [2:LL-5];
+    range2 = [5:LL-5];
 
-    ESP = [0; spain(2:end)-spain(1:end-1)];
-    ESPor = ESP; % -or termination for new cases series without 5-day moving average
-    ESP(5:end) = (ESP(5:end) +ESP(4:end-1) +ESP(3:end-2) +ESP(2:end-3) +ESP(1:end-4) )/5; ESP = [0;0;0;0; ESP];
+    ESP = [spain(2:end)-spain(1:end-1)]; % Daily new occurrences
+    ESPor = ESP;
+    ESP(range2) = 0.2*ESP(range2) +0.2*ESP(range2-1) +0.2*ESP(range2-2) +0.2*ESP(range2-3) +0.2*ESP(range2-4);
 
-    IT  = [0; italy(2:end)-italy(1:end-1)];
+    IT  = [italy(2:end)-italy(1:end-1)];
     ITor = IT;
-    IT(5:end) = (IT(5:end) +IT(4:end-1) +IT(3:end-2) +IT(2:end-3) +IT(1:end-4) )/5; IT = [0;0;0;0; IT];
+    IT(range2) = 0.2*IT(range2) +0.2*IT(range2-1) +0.2*IT(range2-2) +0.2*IT(range2-3) +0.2*IT(range2-4);
 
-    FR  = [0; france(2:end)-france(1:end-1)];
+    FR  = [france(2:end)-france(1:end-1)];
     FRor = FR;
-    FR(5:end) = (FR(5:end) +FR(4:end-1) +FR(3:end-2) +FR(2:end-3) +FR(1:end-4) )/5; FR = [0;0;0;0; FR];
+    FR(range2) = 0.2*FR(range2) +0.2*FR(range2-1) +0.2*FR(range2-2) +0.2*FR(range2-3) +0.2*FR(range2-4);
 
-    UK  = [0; uk(2:end)-uk(1:end-1)];
+    UK  = [uk(2:end)-uk(1:end-1)];
     UKor = UK;
-    UK(5:end) = (UK(5:end) +UK(4:end-1) +UK(3:end-2) +UK(2:end-3) +UK(1:end-4) )/5; UK = [0;0;0;0; UK];
+    UK(range2) = 0.2*UK(range2) +0.2*UK(range2-1) +0.2*UK(range2-2) +0.2*UK(range2-3) +0.2*UK(range2-4);
 
-    % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    %   Plot new cases
-    % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    %   3. Plot (i) new cases, (ii) deaths
+    % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
 
     if idx == 1
         fig1 = figure('Name','Confirmed new cases','Units','Normalized', 'OuterPosition',[0 0 1 1]);
@@ -96,7 +123,8 @@ for idx = 1:2
     end
 
     % Spain
-    ESPh = subplot(221); yyaxis left, plot(ESPor), hold on, plot(ESP); xlabel('Days');
+    ESPh = subplot(221);
+        yyaxis left, plot(ESPor), hold on, plot(ESP); xlabel('Days');
         ESPbelowlim = -0.66*max(ESPor);
         ESPabovelim = 1.05*max(ESPor);
         ylim([ESPbelowlim ESPabovelim ]);
@@ -151,26 +179,34 @@ for idx = 1:2
     UKh.Legend.String = UKh.Legend.String(1:4);
     UKh.Legend.NumColumns = 2;
 
+    if idx == 0
 
-    clear spain ESP ESPh ESPor
-    clear italy IT ITh ITor
-    clear france FR FRh FRor
-    clear uk UK UKh UKor
-    % clear all
+        % Let space for growth rate above each subplot
+        ESPh.Position = grid_plots(1,:);
+        ITh.OuterPosition  = grid_plots(2,:);
+        FRh.OuterPosition  = grid_plots(3,:);
+        UKh.Position  = grid_plots(4,:);
 
-    % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    %   Save plots
-    % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        ESPh2 = axes('Parent',fig1, 'Units', 'Normalized', 'OuterPosition', grid_rul(1,:));
 
-    % if idx == 1
-    %   saveas(fig1, [pwd '\images\figure_confirmed.png']);
-    % elseif idx == 2
-    %   saveas(fig2, [pwd '\images\figure_deaths.png']);
-    % end
+    end
 
+    clear spain ESP ESPh %ESPor
+    clear italy IT ITh %ITor
+    clear france FR FRh %FRor
+    clear uk UK UKh %UKor
     clear data
 
+    % clear all
+
+
+
 end
+
+
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%   4. Save plots
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 saveas(fig1, [pwd '\images\figure_confirmed.png']);
 saveas(fig2, [pwd '\images\figure_deaths.png']);
