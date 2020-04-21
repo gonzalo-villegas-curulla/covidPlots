@@ -46,7 +46,7 @@ grid_rul = [0, (grid_plots(1,2)+grid_plots(1,4)), 0.5, (1-grid_plots(1,2)+grid_p
             ;
             ];
 
-for idx = 1:2
+for idx = 1:2 % Run once for New cases, and twice for Deaths plots
 
 
 
@@ -119,7 +119,7 @@ for idx = 1:2
     if idx == 1
         fig1 = figure('Name','Confirmed new cases','Units','Normalized', 'OuterPosition',[0 0 1 1]);
     elseif idx == 2
-        fig2 = figure('Name','Deaths','Units','Normalized', 'OuterPosition',[0 0 1 1]);
+        fig3 = figure('Name','Deaths','Units','Normalized', 'OuterPosition',[0 0 1 1]);
     end
 
     % Spain
@@ -179,15 +179,37 @@ for idx = 1:2
     UKh.Legend.String = UKh.Legend.String(1:4);
     UKh.Legend.NumColumns = 2;
 
-    if idx == 0
+    if idx == 1
 
-        % Let space for growth rate above each subplot
-        ESPh.Position = grid_plots(1,:);
-        ITh.OuterPosition  = grid_plots(2,:);
-        FRh.OuterPosition  = grid_plots(3,:);
-        UKh.Position  = grid_plots(4,:);
+        % Allow space for growth rate above each subplot
+        % ESPh.Position = grid_plots(1,:);
+        % ITh.OuterPosition  = grid_plots(2,:);
+        % FRh.OuterPosition  = grid_plots(3,:);
+        % UKh.Position  = grid_plots(4,:);
 
-        ESPh2 = axes('Parent',fig1, 'Units', 'Normalized', 'OuterPosition', grid_rul(1,:));
+        % ESPh2 = axes('Parent',fig1, 'Units', 'Normalized', 'OuterPosition', grid_rul(1,:));
+
+        fig2 = figure;
+        h1 = subplot(411);
+              plot(ESPor(range)./ESPor(range-1)); hold on; plot(ESP(range)./ESP(range-1));
+              ylim([0 2.1]); legend('RAW','5dAverage','Location','NorthWest'); grid on;
+              ylabel('ESP'); title('Growth rate of confirmed cases');
+              h1.YAxisLocation = 'right';
+        h2 = subplot(412);
+              plot(ITor(range)./ITor(range-1)); hold on; plot(IT(range)./IT(range-1));
+              ylim([0 2.1]); grid on;
+              ylabel('IT');
+              h2.YAxisLocation = 'right';
+        h3 = subplot(413);
+              plot(FRor(range)./FRor(range-1)); hold on; plot(FR(range)./FR(range-1));
+              ylim([0 2.1]); grid on;
+              ylabel('FR');
+              h3.YAxisLocation = 'right';
+        h4 = subplot(414);
+              plot(UKor(range)./UKor(range-1)); hold on; plot(UK(range)./UK(range-1));
+              ylim([0 2.1]); grid on;
+              ylabel('UK');
+              h4.YAxisLocation = 'right';
 
     end
 
@@ -196,8 +218,6 @@ for idx = 1:2
     clear france FR FRh %FRor
     clear uk UK UKh %UKor
     clear data
-
-    % clear all
 
 
 
@@ -209,4 +229,4 @@ end
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 saveas(fig1, [pwd '\images\figure_confirmed.png']);
-saveas(fig2, [pwd '\images\figure_deaths.png']);
+saveas(fig3, [pwd '\images\figure_deaths.png']);
