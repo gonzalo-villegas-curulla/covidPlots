@@ -19,4 +19,6 @@ Vertical line marks the first occurrences.
 
 
 <!-- <img src="https://github.com/gonzalo-villegas-curulla/covidPlots/"> -->
-<!-- <img src="C:\Users\organ\Desktop\covid\COVID-19-master\csse_covid_19_data\csse_covid_19_time_series\images\figure1.png"> -->
+<!-- <img src="C:\Users\organ\Desktop\covid\COVID-19-master\csse_covid_19_data\csse_covid_19_time_series\images\figure1.png">
+
+-->
